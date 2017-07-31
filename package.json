@@ -20,23 +20,24 @@
     "src/*/*.d.ts"
   ],
   "devDependencies": {
+    "@exility/block": "*",
+    "@exility/dom": "*",
+    "@exility/jacket": "*",
+    "@exility/ts-transformer": "*",
     "@types/jest": "^19.2.3",
     "@types/koa": "^2.0.39",
     "@types/node": "^8.0.17",
     "@types/webpack": "^3.0.5",
     "@types/webpack-merge": "0.0.5",
+    "awesome-typescript-loader": "^3.2.2",
     "jest": "^20.0.3",
     "koa": "^2.3.0",
     "start-server-webpack-plugin": "^2.2.0",
     "ts-jest": "^20.0.4",
-    "typescript": "^2.4.0",
+    "typescript": "^2.4.2",
     "webpack": "^3.4.1",
     "webpack-merge": "^4.1.0",
-    "@exility/block": "../exility/block",
-    "@exility/dom": "../exility/dom",
-    "@exility/jacket": "../exility/jacket",
-    "@exility/storybook": "../exility/storybook",
-    "@exility/ts-transformer": "../exility/ts-transformer"
+    "webpack-node-externals": "^1.6.0"
   },
   "jest": {
     "transform": {

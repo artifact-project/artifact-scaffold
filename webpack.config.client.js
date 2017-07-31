@@ -21,7 +21,6 @@ module.exports = {
 			{
 				test: /\.tsx?$/,
 				loader: 'awesome-typescript-loader',
-				exclude: /node_modules\/(?!@exility|skeletik)/,
 				options: {
 					getCustomTransformers() {
 						return {
@@ -57,5 +56,6 @@ module.exports = {
 				NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'dev'),
 			},
 		}),
+		new webpack.HotModuleReplacementPlugin(),
 	],
 };

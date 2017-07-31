@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
+const webpackNodeExternals = require('webpack-node-externals');
 const StartServerPlugin = require('start-server-webpack-plugin');
 const clientWebpackConfig = require('./webpack.config.client');
 
@@ -12,7 +13,7 @@ module.exports = webpackMerge(
 		entry: {
 			server: [
 				'webpack/hot/poll?1000',
-				'./server/index',
+				'./index',
 			],
 		},
 
@@ -21,13 +22,14 @@ module.exports = webpackMerge(
 		cache: true,
 
 		externals: [
-			// nodeExternals({whitelist: ['webpack/hot/poll?1000']})
+			webpackNodeExternals({
+				whitelist: ['webpack/hot/poll?1000'],
+			}),
 		],
 
 		plugins: [
 			new StartServerPlugin('server.bundle.js'),
 			new webpack.NamedModulesPlugin(),
-			new webpack.HotModuleReplacementPlugin(),
 			new webpack.NoEmitOnErrorsPlugin(),
 		],
 	},
