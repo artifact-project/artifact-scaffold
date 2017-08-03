@@ -23,6 +23,7 @@
     "@exility/block": "*",
     "@exility/dom": "*",
     "@exility/jacket": "*",
+    "@exility/string": "*",
     "@exility/ts-transformer": "*",
     "@types/jest": "^19.2.3",
     "@types/koa": "^2.0.39",
