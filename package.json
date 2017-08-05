@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "dev": "set NODE_ENV=dev && ts-node index.ts",
+    "dev": "ts-node index.ts",
     "test": "jest --coverage",
     "ts-build": "tsc",
     "git-clean": "git clean -f",
