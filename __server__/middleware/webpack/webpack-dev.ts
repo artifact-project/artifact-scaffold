@@ -3,7 +3,6 @@ import {PassThrough} from 'stream';
 import {Compiler} from 'webpack';
 
 import * as devMiddleware from 'webpack-dev-middleware';
-import * as hotMiddleware from 'webpack-hot-middleware';
 
 // https://github.com/leecade/koa-webpack-middleware/blob/master/middleware/devMiddleware.js
 export default function webpackDevMiddleware(webpack: Compiler, opts?: devMiddleware.Options) {

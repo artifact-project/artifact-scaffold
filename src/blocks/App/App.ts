@@ -1,5 +1,5 @@
 import Block from '@exility/block';
-import css from '../../css';
+import css from '@exility/css';
 
 interface AppAttrs {
 	state: any;

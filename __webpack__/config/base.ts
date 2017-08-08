@@ -1,11 +1,13 @@
 import * as path from 'path';
 import * as webpack from 'webpack';
+import exilityTransformer from '@exility/ts-transformer';
 
-// const {default:exilityTransformer} = require('@exility/ts-transformer');
+const isDev = process.env.NODE_ENV !== 'production';
+const R_EXCLUDE = /\/(node_modules|dist|private|__[a-z-]+__)\//i;
 
 export default (): webpack.Configuration => ({
 	watch: true,
-	devtool: 'cheap-module-eval-source-map',
+	devtool: isDev ? 'cheap-module-eval-source-map' : false,
 
 	output: {
 		path: path.join(__dirname, '..', '..'),
@@ -18,21 +20,19 @@ export default (): webpack.Configuration => ({
 			{
 				test: /\.tsx?$/,
 				loader: 'awesome-typescript-loader',
-				exclude: /\/(node_modules|dist)\//,
+				exclude: R_EXCLUDE,
 				options: {
-					// xgetCustomTransformers() {
-					// 	return {
-					// 		before: [exilityTransformer],
-					// 		after: [],
-					// 	};
-					// },
+					getCustomTransformers: () => ({
+						before: [exilityTransformer({isomorphic: true})],
+						after: [],
+					}),
 				},
 			},
 
 			// CSS
 			{
 				test: /\.css$/,
-				exclude: /\/(node_modules|dist)\//,
+				exclude: R_EXCLUDE,
 				use: [
 					{loader: 'style-loader'},
 					{loader: 'css-loader'},
@@ -48,12 +48,13 @@ export default (): webpack.Configuration => ({
 		],
 	},
 
-	plugins: [
-		new webpack.HotModuleReplacementPlugin(),
+	plugins: [].concat(
+		isDev ? new webpack.HotModuleReplacementPlugin() : [],
 		new webpack.DefinePlugin({
 			'process.env': {
-				NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'dev'),
+				SEED: JSON.stringify(process.env.SEED),
+				NODE_ENV: JSON.stringify(process.env.NODE_ENV),
 			},
 		}),
-	],
+	),
 });

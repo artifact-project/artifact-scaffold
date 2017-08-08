@@ -1,30 +1,36 @@
-import {core as stdlib} from '@exility/stdlib';
-import {createCompiler} from '@exility/string';
+import {revertCSSNode} from '@exility/css';
 
-import App from './blocks/App/App';
-import pageTemplateString from './page.tpl';
+import Page from './blocks/Page/Page';
+import mountTo from '@exility/dom/src/mountTo/mountTo';
+import {getGlobalData} from './data/global';
 
-const compiler = createCompiler({
-	scope: [
-		'state',
-		'__blocks__',
-	],
-	blocks: ['App'],
-	metaComments: true,
-});
+console.time('page');
 
-const templateFactory = compiler(pageTemplateString);
-const template = templateFactory({stdlib});
+const isHRM = !!window['page'];
+const page = new Page(
+	getGlobalData(location.toString()),
+	isHRM ? {} : {isomorphic: document},
+);
 
-export function renderPage(url: string) {
-	return template({
-		state: {
-			title: 'Exility scaffold!',
-			request: url,
-		},
+console.timeEnd('page');
 
-		__blocks__: {
-			App,
-		},
+if (isHRM) {
+	const frag = document.createDocumentFragment();
+
+	mountTo(frag, page);
+
+	[].forEach.call(frag.querySelectorAll('script') , el => {
+		el.parentNode.removeChild(el);
 	});
+
+	document.removeChild(document.documentElement);
+	document.appendChild(frag);
+
+	revertCSSNode();
+} else {
+	mountTo(document, page);
 }
+
+
+window['page'] = page;
+module['hot'] && module['hot'].accept();
