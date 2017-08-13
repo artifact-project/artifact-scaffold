@@ -25,7 +25,7 @@ export default class Page extends Block<PageAttrs> {
 		html
 			head
 				title[innerHTML=\${attrs.title}]
-				style#__css__ | %__USED_CSS_PLACEHOLDER__%
+				style#__css__[data-names="%__USED_CSS__%"] | %__USED_CSS_TEXT__%
 			body.main
 				App[__attrs__=\${attrs}]
 				script[src="/dist/initial.bundle.js"]

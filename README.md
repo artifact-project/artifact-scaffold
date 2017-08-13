@@ -2,12 +2,15 @@ Exility Scaffold
 ----------------
 Быстрый страт проекта на Exility.
 
- - `npm run dev` — запуск dev окружения
+ - `npm run dev` — запуск dev режима
+ - `npm start` — production версия
 
 
 ### Features
 
- - Hot reloading (client & server)
+ - Isomorphic
+ - CSS in JS
+ - Hot reloading
 
 
 ### Development

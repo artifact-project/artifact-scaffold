@@ -53,6 +53,7 @@ export default (): webpack.Configuration => ({
 		new webpack.DefinePlugin({
 			'process.env': {
 				SEED: JSON.stringify(process.env.SEED),
+				RUN_AT: JSON.stringify('client'),
 				NODE_ENV: JSON.stringify(process.env.NODE_ENV),
 			},
 		}),

@@ -19,7 +19,10 @@ export default (app) => {
 		const usedCSS = getUsedCSS();
 		const cssEnd = now();
 
-		ctx.body = content.replace('%__USED_CSS_PLACEHOLDER__%', usedCSS.cssText);
+		ctx.body = content
+			.replace('%__USED_CSS__%', usedCSS.names.join(','))
+			.replace('%__USED_CSS_TEXT__%', usedCSS.cssText)
+		;
 
 		ctx.set('x-time-render', (renderEnd - start) + '');
 		ctx.set('x-time-css', (cssEnd - renderEnd) + '');

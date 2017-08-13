@@ -14,7 +14,7 @@ export default class App extends Block<AppAttrs> {
 		},
 
 		'text': {
-			color: '#f00',
+			color: '#0f0',
 		},
 
 		'pic': {

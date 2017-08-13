@@ -6,31 +6,36 @@ import {getGlobalData} from './data/global';
 
 console.time('page');
 
-const isHRM = !!window['page'];
+const isHRM = false && !!window['page'];
 const page = new Page(
 	getGlobalData(location.toString()),
 	isHRM ? {} : {isomorphic: document},
 );
 
 console.timeEnd('page');
+console.log(page['__view__']);
 
 if (isHRM) {
-	const frag = document.createDocumentFragment();
-
-	mountTo(frag, page);
-
-	[].forEach.call(frag.querySelectorAll('script') , el => {
-		el.parentNode.removeChild(el);
-	});
-
-	document.removeChild(document.documentElement);
-	document.appendChild(frag);
-
-	revertCSSNode();
+	// const frag = document.createDocumentFragment();
+	// const oldPage = document.documentElement;
+	//
+	// mountTo(frag, page);
+	//
+	// [].forEach.call(frag.querySelectorAll('script') , el => {
+	// 	el.parentNode.removeChild(el);
+	// });
+	//
+	// document.removeChild(oldPage);
+	// document.appendChild(frag);
+	//
+	// requestAnimationFrame(revertCSSNode);
 } else {
 	mountTo(document, page);
 }
 
 
 window['page'] = page;
-module['hot'] && module['hot'].accept();
+
+if (module['hot']) {
+	module['hot'].accept();
+}
