@@ -1,25 +1,28 @@
 import Page from './blocks/Page/Page';
 import mountTo from '@exility/dom/src/mountTo/mountTo';
+import {reloadBlock} from '@exility/dom/src/reload/reload';
 import {getGlobalData} from './data/global';
-import  hotUpdate from './hotUpdate';
 
 console.time('page');
 
+let page = window['page'];
+
 if (window['page']) {
-	hotUpdate(window['page']['__view__'], Page.prototype['__template__']);
+	reloadBlock(page, Page);
 } else {
-	const page = new Page(
+	page = new Page(
 		getGlobalData(location.toString()),
 		{isomorphic: document},
 	);
 
 	mountTo(document, page);
-
-	console.timeEnd('page');
-	console.log(page['__view__']);
-
-	window['page'] = page;
 }
+
+window['page'] = page;
+
+console.timeEnd('page');
+console.log(page['__view__']);
+
 
 if (module['hot']) {
 	module['hot'].accept();

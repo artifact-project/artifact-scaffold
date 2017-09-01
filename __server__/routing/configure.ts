@@ -13,6 +13,7 @@ runtimeBlockActivate(Page, {
 export default (app) => {
 	app.use((ctx: Context) => {
 		const start = now();
+
 		const page = new Page(getGlobalData(ctx.req.url));
 		const content = page['__view__'];
 		const renderEnd = now();

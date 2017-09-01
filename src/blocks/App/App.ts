@@ -25,6 +25,6 @@ export default class App extends Block<AppAttrs> {
 
 	static template = `
 		.app
-			.text | App.req: \${attrs.request}
+			.text | req!!!: \${attrs.request}
 	`;
 }
