@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node index.ts",
+    "dev": "ts-node --no-cache index.ts",
     "start": "NODE_ENV=production ts-node index.ts",
     "test": "jest --coverage",
     "ts-build": "tsc",
@@ -36,6 +36,7 @@
     "@types/webpack-hot-middleware": "^2.15.0",
     "@types/webpack-merge": "0.0.5",
     "awesome-typescript-loader": "^3.2.2",
+    "decache": "^4.1.0",
     "jest": "^20.0.3",
     "koa": "^2.3.0",
     "koa-static": "^4.0.1",
