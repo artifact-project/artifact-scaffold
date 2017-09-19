@@ -10,8 +10,10 @@ let page = window['page'];
 if (window['page']) {
 	reloadBlock(page, Page);
 } else {
+	window['dataSource'] = getGlobalData(location.toString());
+
 	page = new Page(
-		getGlobalData(location.toString()),
+		window['dataSource'],
 		{isomorphic: document},
 	);
 

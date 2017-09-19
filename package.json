@@ -37,6 +37,7 @@
     "@types/webpack-merge": "0.0.5",
     "awesome-typescript-loader": "^3.2.2",
     "decache": "^4.1.0",
+    "elastin": "*",
     "jest": "^20.0.3",
     "koa": "^2.3.0",
     "koa-static": "^4.0.1",

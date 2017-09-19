@@ -2,7 +2,7 @@ import Block from '@exility/block';
 import css, {fx} from '@exility/css';
 
 interface WelcomeFormAttrs {
-	request: any;
+	message: string;
 }
 
 export default class WelcomeForm extends Block<WelcomeFormAttrs> {
@@ -33,10 +33,16 @@ export default class WelcomeForm extends Block<WelcomeFormAttrs> {
 	});
 
 	static template = `
-		form.form[@submit]
-			input.input[bind=\${attrs.name}]
+		form.form[@submit.prevent]
+			div > input.input[name="message" autoFocus @input="typeMessage"]
+			p | \${attrs.message}
 	`;
 
 	'@submit'() {
+		alert('Wow!');
+	}
+
+	'@typeMessage'({domTarget:{value}}) {
+		this.update({message: value});
 	}
 }

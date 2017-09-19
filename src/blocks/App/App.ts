@@ -110,7 +110,7 @@ export default class App extends Block<AppAttrs> {
 
 	static template = `
 		.app
-			GlitchText[value="Artifact"]
+			GlitchText[value=\${attrs.header}]
 			WelcomeForm
 	`;
 }
