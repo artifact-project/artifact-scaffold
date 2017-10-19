@@ -1,6 +1,6 @@
-Exility Scaffold
+Artifact Scaffold
 ----------------
-Быстрый страт проекта на Exility.
+Быстрый страт проекта на Exility + Elastin.
 
  - `npm run dev` — запуск dev режима
  - `npm start` — production версия
@@ -11,6 +11,7 @@ Exility Scaffold
  - Isomorphic
  - CSS in JS
  - Hot reloading
+ - Reactive data-flow
 
 
 ### Development
