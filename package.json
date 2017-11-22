@@ -24,6 +24,7 @@
     "@exility/block": "*",
     "@exility/css": "*",
     "@exility/dom": "*",
+    "@exility/form": "*",
     "@exility/jacket": "*",
     "@exility/string": "*",
     "@exility/ts-transformer": "*",
