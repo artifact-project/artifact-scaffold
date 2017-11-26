@@ -17,7 +17,7 @@ if (process.env.RUN_AT !== 'server') {
 
 export function getGlobalData(url) {
 	return observable({
-		title: 'Exility scaffold',
+		title: 'Artifact scaffold',
 		header: 'ARTIFACT',
 		request: url,
 	});

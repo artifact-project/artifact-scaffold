@@ -1,8 +1,13 @@
+import * as minimist from 'minimist';
 import * as webpack from 'webpack';
 import * as webpackMerge from 'webpack-merge';
+import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
+
+// Bse config
 import baseConfig from './base';
 
-const isDev = process.env.NODE_ENV !== 'production';
+const IS_DEV = process.env.NODE_ENV !== 'production';
+const {analyzer} = minimist(process.argv.slice(2));
 
 export default webpackMerge(
 	// Base config
@@ -13,14 +18,16 @@ export default webpackMerge(
 		target: 'web',
 
 		entry: {
-			initial: [].concat(
-				isDev ? 'webpack-hot-middleware/client' : [],
+			vendor: [].concat(
+				IS_DEV ? 'webpack-hot-middleware/client' : [],
+				'elastin',
+				'@artifact-project/i18n',
 				'@exility/block',
 				'@exility/css',
 				'@exility/stdlib',
 			),
 
-			boot: [
+			app: [
 				'./src/boot',
 			],
 		},
@@ -31,15 +38,15 @@ export default webpackMerge(
 
 		plugins: [].concat(
 			new webpack.optimize.CommonsChunkPlugin({
-				name: 'initial',
+				name: 'vendor',
 			}),
 
-			isDev ? [] : new webpack.LoaderOptionsPlugin({
+			IS_DEV ? [] : new webpack.LoaderOptionsPlugin({
 				minimize: true,
 				debug: false
 			}),
 
-			isDev ? [] : new webpack.optimize.UglifyJsPlugin({
+			IS_DEV ? [] : new webpack.optimize.UglifyJsPlugin({
 				beautify: false,
 				mangle: {
 					keep_fnames: true,
@@ -47,7 +54,23 @@ export default webpackMerge(
 				compress: {
 				},
 				comments: false,
-			}),
+				output: {
+					max_line_len: 255,
+				},
+			} as any),
+
+			analyzer ? new BundleAnalyzerPlugin({
+				analyzerMode: 'server',
+				analyzerHost: '127.0.0.1',
+				analyzerPort: 3088,
+				reportFilename: 'report.html',
+				defaultSizes: 'parsed',
+				openAnalyzer: false,
+				generateStatsFile: false,
+				statsFilename: 'stats.json',
+				statsOptions: null,
+				logLevel: 'info'
+			}) : [],
 		),
 	},
 );

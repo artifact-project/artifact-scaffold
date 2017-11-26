@@ -6,32 +6,60 @@ import now = require('performance-now');
 import decache = require('decache');
 
 export default (app) => {
+	const IS_DEV = process.env.NODE_ENV !== 'production';
+	let Page = require('../../src/blocks/Page/Page').default;
+	let {getGlobalData} = require('../../src/data/global');
+
+	runtimeBlockActivate(Page, {
+		metaComments: true,
+	});
+
 	app.use((ctx: Context) => {
 		const start = now();
+		let requireTime = 0;
+		let compileTime = 0;
 
-		const Page = require('../../src/blocks/Page/Page').default;
-		const {getGlobalData} = require('../../src/data/global');
+		if (IS_DEV) {
+			requireTime = -now();
+			Page = require('../../src/blocks/Page/Page').default;
+			getGlobalData = require('../../src/data/global').getGlobalData;
+			requireTime += now();
 
-		runtimeBlockActivate(Page, {
-			metaComments: true,
-		});
+			// Compiling
+			compileTime = -now();
+			runtimeBlockActivate(Page, {
+				metaComments: true,
+			});
+			compileTime += now();
+		}
 
+		// Render
+		let renderTime = -now();
 		const page = new Page(getGlobalData(ctx.req.url));
-		const renderEnd = now();
+		renderTime += now();
 
+		// Getting Critical CSS
+		let cssTime = -now();
 		const usedCSS = getUsedCSS();
-		const cssEnd = now();
+		cssTime += now();
 
+		// Adding Critical CSS into HTML
 		ctx.body = page['__view__']
 			.replace('%__USED_CSS__%', usedCSS.names.join(','))
 			.replace('%__USED_CSS_TEXT__%', usedCSS.cssText)
 		;
 
-		ctx.set('x-time-render', (renderEnd - start) + '');
-		ctx.set('x-time-css', (cssEnd - renderEnd) + '');
-		ctx.set('x-time-all', (now() - start) + '');
+		// Exporting timings
+		requireTime && ctx.set('x-time-require', requireTime.toFixed(3));
+		compileTime && ctx.set('x-time-compile', compileTime.toFixed(3));
+		ctx.set('x-time-render', renderTime.toFixed(3));
+		ctx.set('x-time-css', cssTime.toFixed(3));
+		ctx.set('x-time-all', (now() - start).toFixed(3));
 
-		decache('../../src/blocks/Page/Page');
-		decache('../../src/data/global');
+		if (IS_DEV) {
+			// Decache for reloading
+			decache('../../src/blocks/Page/Page');
+			decache('../../src/data/global');
+		}
 	});
 };
