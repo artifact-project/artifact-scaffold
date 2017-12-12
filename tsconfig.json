@@ -4,6 +4,8 @@
     "target": "es5",
     "moduleResolution": "node",
     "experimentalDecorators": true,
+    "importHelpers": true,
+    "noEmitHelpers": true,
     "lib": [
       "dom",
       "es5",

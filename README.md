@@ -1,9 +1,10 @@
 Artifact Scaffold
-----------------
+-----------------
 Быстрый страт проекта на Exility + Elastin.
 
  - `npm run dev` — запуск dev режима
  - `npm start` — production версия
+   - `--analyzer` — анализатор бандлов
 
 
 ### Features

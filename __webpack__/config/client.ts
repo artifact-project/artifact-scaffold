@@ -20,11 +20,12 @@ export default webpackMerge(
 		entry: {
 			vendor: [].concat(
 				IS_DEV ? 'webpack-hot-middleware/client' : [],
-				'elastin',
 				'@artifact-project/i18n',
 				'@exility/block',
 				'@exility/css',
 				'@exility/stdlib',
+				'elastin',
+				'tslib',
 			),
 
 			app: [
@@ -65,7 +66,7 @@ export default webpackMerge(
 				analyzerPort: 3088,
 				reportFilename: 'report.html',
 				defaultSizes: 'parsed',
-				openAnalyzer: false,
+				openAnalyzer: true,
 				generateStatsFile: false,
 				statsFilename: 'stats.json',
 				statsOptions: null,

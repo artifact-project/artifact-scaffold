@@ -1,13 +1,14 @@
 import Block from '@exility/block';
-import css, {fx} from '@exility/css';
+import {formify, Form, Element, WithFormContext} from '@exility/form';
+import {theme} from '@exility/css';
 
 interface WelcomeFormAttrs {
 	message: string;
 }
 
-export default class WelcomeForm extends Block<WelcomeFormAttrs> {
-	static classNames = css({
-		'form': {
+const welcomeTheme = theme.create(
+	theme.for(Form, {
+		':host': {
 			margin: '50px auto',
 			padding: 20,
 			background: '#fff',
@@ -15,8 +16,10 @@ export default class WelcomeForm extends Block<WelcomeFormAttrs> {
 			borderRadius: 5,
 			maxWidth: 300,
 		},
+	}),
 
-		'input': {
+	theme.for(Element, {
+		':host': {
 			width: '100%',
 			border: '2px solid #ccc',
 			borderRadius: 3,
@@ -28,21 +31,21 @@ export default class WelcomeForm extends Block<WelcomeFormAttrs> {
 			'&:focus': {
 				outline: 'none',
 				borderColor: '#f60',
-			}
+			},
 		},
-	});
+	}),
+);
 
+class WelcomeForm extends Block<WelcomeFormAttrs, WithFormContext> {
+	static blocks = {Form, Element};
 	static template = `
-		form.form[@submit.prevent]
-			div > input.input[name="message" autoFocus @input="typeMessage"]
-			p | \${attrs.message}
+		Form
+			Element[name="message" placeholder="Enter text"]
+			.length | !? \${context.$form.get("message").value}
 	`;
-
-	'@submit'() {
-		alert('Wow!');
-	}
-
-	'@typeMessage'({domTarget:{value}}) {
-		this.update({message: value});
-	}
 }
+
+export default formify({
+	theme: welcomeTheme,
+	submit: () => Promise.resolve(),
+})(WelcomeForm);

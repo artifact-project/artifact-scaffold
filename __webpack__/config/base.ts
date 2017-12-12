@@ -7,7 +7,7 @@ const R_EXCLUDE = /\/(node_modules|dist|private|__[a-z-]+__)\//i;
 
 export default (): webpack.Configuration => ({
 	watch: true,
-	devtool: isDev ? 'cheap-module-eval-source-map' : false,
+	devtool: 0 && isDev ? 'cheap-module-eval-source-map' : false,
 
 	output: {
 		path: path.join(__dirname, '..', '..'),
